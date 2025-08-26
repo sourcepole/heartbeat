@@ -1,5 +1,6 @@
-
 # Set your username and password to access the Hetzner API.
+
+first_check_hetzner: true
 
 base_url: https://robot-ws.your-server.de
 

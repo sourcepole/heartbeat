@@ -4,7 +4,7 @@ require "httparty"
 require "lib/hooks"
 
 class FailoverIp
-  attr_accessor :base_url, :basic_auth, :failover_ip, :ping_ip, :ips, :interval, :timeout, :tries, :force_down, :only_once, :dry
+  attr_accessor :first_check_hetzner, :attr_accessor, :base_url, :basic_auth, :failover_ip, :ping_ip, :ips, :interval, :timeout, :tries, :force_down, :only_once, :dry
 
   def ping(ip = ping_ip)
     tries.times.any? do |i|
@@ -102,6 +102,7 @@ class FailoverIp
   end
 
   def initialize(options)
+    self.first_check_hetzner = options[:first_check_hetzner] || false
     self.base_url = options[:base_url]
     self.basic_auth = options[:basic_auth]
     self.failover_ip = options[:failover_ip]
@@ -140,6 +141,11 @@ class FailoverIp
   end
 
   def monitor
+    if first_check_hetzner
+      $logger.info "Initial Hetzner API check."
+      current_target
+    end
+
     loop do
       res = check
 

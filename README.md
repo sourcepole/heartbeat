@@ -80,6 +80,18 @@ To configure the Hetzner API access, the Failover IP as well as your server's
 ip addresses, edit config/heartbeat.yml
 
 ```yaml
+
+# Should heartbeat try to access the Hetzner failover API
+# before starting the monitoring? This makes debugging your
+# system easier, since you will know from the start whether or not
+# heartbeat can access the API and not only when heartbeat needs
+# to access it to trigger a failover.
+#
+# This is off by default to preserve previous behavior but
+# probably shoud be on by default.
+#
+first_check_hetzner: true
+
 base_url: https://robot-ws.your-server.de
 
 basic_auth:
